@@ -107,7 +107,7 @@ class JiraRest:
                 jsonData = json.load(f)
         else:
             print('--------------------------------\n%s/%s %s' % (self.url, resource, params))
-            r = requests.get('%s/%s' % (self.url, resource), params=params, auth=self.auth, verify=False)
+            r = requests.get('%s/%s' % (self.url, resource), params=params, auth=self.auth, verify=True)
             r.raise_for_status()
             jsonData = r.json()
 
