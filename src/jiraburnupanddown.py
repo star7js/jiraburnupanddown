@@ -158,8 +158,7 @@ class Jira6(JiraRest):
                 'sprintId' : sprintId
             })
 
-        endDate = jsonData['sprint']['completeDate']
-        if endDate == 'None':
+        if (endDate := jsonData['sprint']['completeDate']) == 'None':
             endDate = jsonData['sprint']['endDate']
 
         localzone = tzlocal.get_localzone()
@@ -1279,7 +1278,6 @@ def main():
             gui.openConnectionDialog()
         except requests.exceptions.HTTPError as e:
             gui.setConnectionStatus(str(e))
-            status_code = e.response.status_code
 
             # This code is disabled because the Bad Request does not arrive here.
             # Instead of the other errors that are the result of failed requests performed by the model,
@@ -1290,7 +1288,7 @@ def main():
             #
             #if status_code == 400: # Bad Request
             #    gui.openConnectionDialog('The server reported a bad request. Please check your burnup issue query for invalid JQL.')
-            if status_code == 401: # Unauthorized
+            if (status_code := e.response.status_code) == 401: # Unauthorized
                 gui.openConnectionDialog()
             elif status_code == 403: # Forbidden
                 header_name = 'X-Authentication-Denied-Reason'
