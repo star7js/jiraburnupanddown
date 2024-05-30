@@ -43,8 +43,8 @@ class JiraRequestHandler(SimpleHTTPRequestHandler):
 
         for resource, query, datafile in resources:
             if re.match(resource, o.path[1:]) and \
-               all([(key in query_components and re.match(value, query_components[key][0]))
-                    for key, value in query.items()]):
+               all((key in query_components and re.match(value, query_components[key][0]))
+                    for key, value in query.items()):
                 with open('jira%d/%s' % (jiraversion, datafile), 'rt') as f:
                     data = f.read().encode("utf-8")
 
