@@ -31,6 +31,7 @@ setup(name='jiraburnupanddown',
           'pytz',
           'requests',
           'tzlocal',
+          "security==1.3.0",
       ],
       classifiers=[
           # Status

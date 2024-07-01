@@ -23,7 +23,6 @@ import json
 import numpy as np
 import os.path
 import pkg_resources
-import PyQt5 # import PyQt5 explicitly before pyqtgraph to stop it from using PyQt4
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
 import pytz
@@ -31,6 +30,7 @@ import requests
 import sys
 import time
 import tzlocal
+from security import safe_requests
 
 jiraVersion = 6
 
@@ -107,7 +107,7 @@ class JiraRest:
                 jsonData = json.load(f)
         else:
             print('--------------------------------\n%s/%s %s' % (self.url, resource, params))
-            r = requests.get('%s/%s' % (self.url, resource), params=params, auth=self.auth, verify=True, timeout=60)
+            r = safe_requests.get('%s/%s' % (self.url, resource), params=params, auth=self.auth, verify=True, timeout=60)
             r.raise_for_status()
             jsonData = r.json()
 
