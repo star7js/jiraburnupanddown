@@ -31,6 +31,7 @@ import requests
 import sys
 import time
 import tzlocal
+from security import safe_requests
 
 jiraVersion = 6
 
@@ -107,7 +108,7 @@ class JiraRest:
                 jsonData = json.load(f)
         else:
             print('--------------------------------\n%s/%s %s' % (self.url, resource, params))
-            r = requests.get('%s/%s' % (self.url, resource), params=params, auth=self.auth, verify=True, timeout=60)
+            r = safe_requests.get('%s/%s' % (self.url, resource), params=params, auth=self.auth, verify=True, timeout=60)
             r.raise_for_status()
             jsonData = r.json()
 
